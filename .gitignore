@@ -1,0 +1,9 @@
+/nbproject/private/
+node_modules/
+logfile.log
+
+local-dev.json
+
+*.log
+.DS_Store
+common/

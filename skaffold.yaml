@@ -1,0 +1,69 @@
+apiVersion: skaffold/v2beta5
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+      # - ./infra/k8s/10-mongo-depl.yaml
+build:
+  local:
+    push: false
+  artifacts:
+    - image: *****app/expert-account
+      context: expert-account
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*"
+            dest: .
+          # - src: 'src/**/*.ts'
+          #   dest: .
+    - image: *****app/partner-account
+      context: partner-account
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          # - src: 'src/**/*.ts'
+          - src: '**/*'
+            dest: .
+    - image: *****app/skills
+      context: skills
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*'
+            dest: .
+    - image: *****app/email
+      context: email
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          # - src: 'src/**/*.ts'
+          - src: "**/*"
+            dest: .
+    - image: *****app/queue
+      context: queue
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: *****app/quiz
+      context: quiz
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+# profile:
+#   - name: dev
+#     patches:
+#       - op: replace
+#         path: /build/artifacts/0/docker/dockerfile
+#         value: Dockerfile_dev
